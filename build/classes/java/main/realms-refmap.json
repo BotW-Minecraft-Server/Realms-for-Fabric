@@ -1,0 +1,22 @@
+{
+  "mappings": {
+    "link/botwmcs/samchai/realms/mixin/eventbus/PlayerListMixin": {
+      "placeNewPlayer": "Lnet/minecraft/class_3324;method_14570(Lnet/minecraft/class_2535;Lnet/minecraft/class_3222;)V",
+      "remove": "Lnet/minecraft/class_3324;method_14611(Lnet/minecraft/class_3222;)V"
+    },
+    "link/botwmcs/samchai/realms/mixin/function/PlayerMixin": {
+      "getDestroySpeed": "Lnet/minecraft/class_1657;method_7351(Lnet/minecraft/class_2680;)F"
+    }
+  },
+  "data": {
+    "named:intermediary": {
+      "link/botwmcs/samchai/realms/mixin/eventbus/PlayerListMixin": {
+        "placeNewPlayer": "Lnet/minecraft/class_3324;method_14570(Lnet/minecraft/class_2535;Lnet/minecraft/class_3222;)V",
+        "remove": "Lnet/minecraft/class_3324;method_14611(Lnet/minecraft/class_3222;)V"
+      },
+      "link/botwmcs/samchai/realms/mixin/function/PlayerMixin": {
+        "getDestroySpeed": "Lnet/minecraft/class_1657;method_7351(Lnet/minecraft/class_2680;)F"
+      }
+    }
+  }
+}

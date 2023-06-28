@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "link.botwmcs.samchai.realms.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "eventbus.PlayerListMixin",
+    "function.PlayerMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

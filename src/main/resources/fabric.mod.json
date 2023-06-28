@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "realms",
+  "version": "${version}",
+  "name": "realms",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/BotW-Minecraft-Server/Realms"
+  },
+  "license": "MIT",
+  "icon": "assets/realms/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "link.botwmcs.samchai.realms.client.RealmsClient"
+    ],
+    "main": [
+      "link.botwmcs.samchai.realms.Realms"
+    ],
+    "cardinal-components": [
+        "link.botwmcs.samchai.realms.capability.CcaCapHandler"
+    ]
+  },
+  "mixins": [
+    "realms.mixins.json"
+  ],
+  "custom": {
+    "cardinal-components": [
+      "realms:player_data"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "fabric": "*",
+    "minecraft": "1.20.1"
+  }
+}
