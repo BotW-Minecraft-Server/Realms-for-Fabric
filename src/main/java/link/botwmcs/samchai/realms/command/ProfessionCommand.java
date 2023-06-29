@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Player;
 public class ProfessionCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("profession")
-                .requires(commandSourceStack -> commandSourceStack.hasPermission(4))
+//                .requires(commandSourceStack -> commandSourceStack.hasPermission(4))
                 .then(Commands.literal("get")
                         .then(Commands.argument("target", EntityArgument.player())
                                 .executes(context -> {

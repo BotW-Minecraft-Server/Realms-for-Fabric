@@ -4,7 +4,7 @@
     <module name="Realms.main"/>
     <option name="PROGRAM_PARAMETERS" value="nogui"/>
     <option name="VM_PARAMETERS" value="-Dfabric.dli.config=D:\Projects\Minecraft\Realms\.gradle\loom-cache\launch.cfg -Dfabric.dli.env=server -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotServer"/>
-    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run/"/>
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run/server/"/>
     <method v="2">
       <option enabled="true" name="Make"/>
     </method>

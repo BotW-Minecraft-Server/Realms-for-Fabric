@@ -4,7 +4,7 @@
     <module name="Realms.main" />
     <option name="PROGRAM_PARAMETERS" value="" />
     <option name="VM_PARAMETERS" value="-Dfabric.dli.config=D:\Projects\Minecraft\Realms\.gradle\loom-cache\launch.cfg -Dfabric.dli.env=client -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotClient" />
-    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run/" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run/client/" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
