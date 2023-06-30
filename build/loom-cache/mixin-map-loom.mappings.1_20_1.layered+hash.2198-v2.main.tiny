@@ -1,3 +1,4 @@
 v1	named	intermediary
 METHOD	link/botwmcs/samchai/realms/mixin/function/PlayerMixin	()Lnet/minecraft/network/chat/Component;	getName	method_5477
 METHOD	link/botwmcs/samchai/realms/mixin/function/PlayerMixin	()Lnet/minecraft/world/entity/player/Inventory;	getInventory	method_31548
+METHOD	link/botwmcs/samchai/realms/mixin/function/PlayerMixin	()Z	isLocalPlayer	method_7340

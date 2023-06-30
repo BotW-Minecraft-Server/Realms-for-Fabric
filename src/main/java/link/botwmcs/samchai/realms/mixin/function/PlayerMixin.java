@@ -24,29 +24,22 @@ public abstract class PlayerMixin {
 
     @Shadow public abstract Inventory getInventory();
 
+    @Shadow public abstract boolean isLocalPlayer();
+
     @Inject(method = "getDestroySpeed", at = @At("TAIL"), cancellable = true)
     protected void modifyDestroySpeed(BlockState blockState, CallbackInfoReturnable<Float> cir) {
-        ItemStack heldItem = this.getInventory().getItem(this.getInventory().selected);
-        boolean isHoldingTool = heldItem.is(ItemTags.TOOLS);
-
-        if (PlayerDataHandler.getProfession(this.getInventory().player).equals("miner") && isHoldingTool) {
-            cir.setReturnValue(cir.getReturnValue() * 1.5F);
-            Realms.LOGGER.info("Player " + this.getName().getString() + " dig speed is: " + cir.getReturnValue() + " (modified)");
-        } else {
+        if (this.isLocalPlayer()) {
             cir.setReturnValue(cir.getReturnValue());
+        } else {
+            ItemStack heldItem = this.getInventory().getItem(this.getInventory().selected);
+            boolean isHoldingTool = heldItem.is(ItemTags.TOOLS);
+            if (PlayerDataHandler.getProfession(this.getInventory().player).equals("miner") && isHoldingTool) {
+                cir.setReturnValue(cir.getReturnValue() * 1.5F);
+                Realms.LOGGER.info("Player " + this.getName().getString() + " dig speed is: " + cir.getReturnValue() + " (modified)");
+            } else {
+                cir.setReturnValue(cir.getReturnValue());
+            }
         }
-
-        // That is a debug code:
-//        if (PlayerDataHandler.getProfession(this.getInventory().player).equals("miner")) {
-//            cir.setReturnValue(cir.getReturnValue() * 1.5F);
-//            Realms.LOGGER.info("Player " + this.getName().getString() + " dig speed is: " + cir.getReturnValue() + " (modified)");
-//            Realms.LOGGER.info("Player profession is " + PlayerDataHandler.getProfession(this.getInventory().player));
-//        } else {
-//            cir.setReturnValue(cir.getReturnValue());
-//            Realms.LOGGER.info("Player " + this.getName().getString() + " dig speed is: " + cir.getReturnValue() + " (original)");
-//            Realms.LOGGER.info("Player profession is " + PlayerDataHandler.getProfession(this.getInventory().player));
-//        }
-//        Realms.LOGGER.info("Player profession is " + PlayerDataHandler.getProfession(this.getInventory().player));
     }
 
 }

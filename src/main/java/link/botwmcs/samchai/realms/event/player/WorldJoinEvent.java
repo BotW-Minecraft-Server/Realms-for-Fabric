@@ -22,7 +22,7 @@ public class WorldJoinEvent {
             player.sendSystemMessage(Component.nullToEmpty("Welcome back to Realms!"));
             player.sendSystemMessage(Component.nullToEmpty("Your profession is " + PlayerDataHandler.getProfession(player)));
         }
-        Realms.LOGGER.info("Player " + player.getName().getString() + " has joined the world.");
+//        Realms.LOGGER.info("Player " + player.getName().getString() + " has joined the world.");
     }
 
 

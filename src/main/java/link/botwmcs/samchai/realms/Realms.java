@@ -2,9 +2,12 @@ package link.botwmcs.samchai.realms;
 
 import com.mojang.logging.LogUtils;
 import link.botwmcs.samchai.realms.command.ProfessionCommand;
+import link.botwmcs.samchai.realms.config.RealmsCommonConfig;
 import link.botwmcs.samchai.realms.event.player.PlayerEventHandler;
 import link.botwmcs.samchai.realms.event.player.WorldJoinEvent;
 import link.botwmcs.samchai.realms.event.player.WorldLeaveEvent;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import org.slf4j.Logger;
@@ -19,7 +22,7 @@ public class Realms implements ModInitializer {
     public void onInitialize() {
         loadEvents();
         loadCommands();
-
+        loadConfigs();
 
     }
 
@@ -32,6 +35,10 @@ public class Realms implements ModInitializer {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             ProfessionCommand.register(dispatcher);
         });
+    }
+
+    private void loadConfigs() {
+        AutoConfig.register(RealmsCommonConfig.class, Toml4jConfigSerializer::new);
     }
 
 }
