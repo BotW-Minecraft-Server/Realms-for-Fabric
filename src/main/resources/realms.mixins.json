@@ -8,6 +8,7 @@
     "function.PlayerMixin"
   ],
   "client": [
+    "function.TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
