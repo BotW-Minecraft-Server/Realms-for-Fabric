@@ -1,5 +1,7 @@
 {
   "gui.realms.singleplayerlocked": "Realms can not be used in singleplayer mode.",
-  "gui.realms.finding": "Looking for the realms with good networking...",
-  "menu.botwmcs.realms": "BotWMCS Realms"
+  "menu.botwmcs.realms": "BotWMCS Realms",
+  "menu.botwmcs.realms.tooltip": "Play online with friends (platform dependent)",
+  "menu.botwmcs.botwpage": "BotWMCS Website",
+  "menu.botwmcs.botwpage.tooltip": "Visit the BotWMCS website"
 }

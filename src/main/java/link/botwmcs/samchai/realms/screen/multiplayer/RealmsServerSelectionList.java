@@ -147,6 +147,9 @@ public class RealmsServerSelectionList extends ObjectSelectionList<RealmsServerS
         }
 
         public void render(GuiGraphics guiGraphics, int i, int j, int k, int l, int m, int n, int o, boolean bl, float f) {
+//            guiGraphics.setColor(0.1F, 0.1F, 0.1F, 1.0F);
+//            guiGraphics.blit(new ResourceLocation("textures/block/cut_copper.png"), 0, 0, 0, 0.0F, 0.0F, width, height, 32, 32);
+//            guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
             if (!this.serverData.pinged) {
                 this.serverData.pinged = true;
                 this.serverData.ping = -2L;
@@ -273,7 +276,6 @@ public class RealmsServerSelectionList extends ObjectSelectionList<RealmsServerS
                     }
                 }
             }
-
         }
 
         private boolean pingCompleted() {

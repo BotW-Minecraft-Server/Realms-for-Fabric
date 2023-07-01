@@ -2,25 +2,33 @@ package link.botwmcs.samchai.realms.screen.multiplayer;
 
 import com.mojang.logging.LogUtils;
 import link.botwmcs.samchai.realms.Realms;
+import link.botwmcs.samchai.realms.config.RealmsCommonConfig;
+import me.shedaniel.autoconfig.AutoConfig;
+import net.minecraft.SharedConstants;
+import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.layouts.FrameLayout;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.layouts.LinearLayout;
-import net.minecraft.client.gui.layouts.SpacerElement;
 import net.minecraft.client.gui.navigation.CommonInputs;
 import net.minecraft.client.gui.screens.*;
+import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerList;
 import net.minecraft.client.multiplayer.ServerStatusPinger;
 import net.minecraft.client.multiplayer.resolver.ServerAddress;
-import net.minecraft.client.resources.language.I18n;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BotwServerScreen extends Screen {
@@ -29,9 +37,11 @@ public class BotwServerScreen extends Screen {
     public static final int LOWER_ROW_BUTTON_WIDTH = 74;
     public static final int FOOTER_HEIGHT = 64;
     public static final int LIST_HEIGHT = 128;
+    public static final List<String> announcementLines = new ArrayList<>();
     private static final Logger LOGGER = LogUtils.getLogger();
     private final ServerStatusPinger pinger = new ServerStatusPinger();
     private final Screen lastScreen;
+
     protected RealmsServerSelectionList serverSelectionList;
     private ServerList servers;
     private Button editButton;
@@ -45,32 +55,39 @@ public class BotwServerScreen extends Screen {
     public BotwServerScreen(Screen screen) {
         super(Component.translatable("menu.botwmcs.realms"));
         this.lastScreen = screen;
+        this.fetchAnnouncementText();
     }
 
 
     protected void init() {
+        Button refreshButton = (Button) this.addRenderableWidget(new ImageButton(this.width / 2 - 150, 0 + 40, 20, 20, 0, 166, 20, new ResourceLocation(Realms.MODID, "textures/gui/elements.png"), 256, 256, (button) -> {
+            this.refreshServerList();
+        }));
+        Button joinButton = (Button) this.addRenderableWidget(new ImageButton(this.width / 2 - 200, 0 + 10, 20, 20, 0, 206, 20, new ResourceLocation(Realms.MODID, "textures/gui/elements.png"), 256, 256, (button) -> {
+            this.joinSelectedServer();
+        }));
+        GridLayout gridLayout = new GridLayout();
+        GridLayout.RowHelper rowHelper = gridLayout.createRowHelper(1);
+        LinearLayout linearLayout2 = (LinearLayout) rowHelper.addChild(new LinearLayout(308, 20, LinearLayout.Orientation.HORIZONTAL));
+        linearLayout2.addChild(refreshButton);
+        gridLayout.arrangeElements();
+        FrameLayout.centerInRectangle(gridLayout, 0, 20, this.width - 50, 0);
+        LinearLayout linearLayout = (LinearLayout) rowHelper.addChild(new LinearLayout(308, 20, LinearLayout.Orientation.HORIZONTAL));
+        linearLayout.addChild(joinButton);
+
         if (this.initedOnce) {
-            this.serverSelectionList.updateSize(this.width, this.height, LIST_HEIGHT, LIST_HEIGHT+40);
+            this.serverSelectionList.updateSize(this.width, 0 + 40, 0, 0+40);
         } else {
             this.initedOnce = true;
             this.servers = new ServerList(this.minecraft);
             this.servers.load();
 
 
-            this.serverSelectionList = new RealmsServerSelectionList(this, this.minecraft, this.width, this.height, LIST_HEIGHT, LIST_HEIGHT+40, 36);
+            this.serverSelectionList = new RealmsServerSelectionList(this, this.minecraft, this.width, 0 + 40, 0, 0+40, 36);
             this.serverSelectionList.updateOnlineServers(this.servers);
         }
-
         this.addWidget(this.serverSelectionList);
-        Button button3 = (Button)this.addRenderableWidget(Button.builder(Component.translatable("selectServer.refresh"), (buttonx) -> {
-            this.refreshServerList();
-        }).width(74).build());
-        GridLayout gridLayout = new GridLayout();
-        GridLayout.RowHelper rowHelper = gridLayout.createRowHelper(1);
-        LinearLayout linearLayout2 = (LinearLayout)rowHelper.addChild(new LinearLayout(308, 20, LinearLayout.Orientation.HORIZONTAL));
-        linearLayout2.addChild(button3);
-        gridLayout.arrangeElements();
-        FrameLayout.centerInRectangle(gridLayout, 0, this.height - 64, this.width, 64);
+
         this.onSelectedChange();
     }
 
@@ -85,68 +102,25 @@ public class BotwServerScreen extends Screen {
         this.serverSelectionList.removed();
     }
 
+    private void fetchAnnouncementText() {
+        RealmsCommonConfig config = AutoConfig.getConfigHolder(RealmsCommonConfig.class).getConfig();
+        String announcementUrl = config.announcement_url;
+        if (!announcementLines.isEmpty()) {
+            announcementLines.clear();
+        }
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(announcementUrl).openStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                announcementLines.add(line);
+            }
+        } catch (IOException e) {
+            Realms.LOGGER.warn("Failed to fetch announcement text from {}", announcementUrl, e);
+        }
+        Realms.LOGGER.debug("Fetched announcement text from {}", announcementUrl);
+    }
+
     private void refreshServerList() {
         this.minecraft.setScreen(new BotwServerScreen(this.lastScreen));
-    }
-
-    private void deleteCallback(boolean bl) {
-        RealmsServerSelectionList.Entry entry = (RealmsServerSelectionList.Entry)this.serverSelectionList.getSelected();
-        if (bl && entry instanceof RealmsServerSelectionList.OnlineServerEntry) {
-            this.servers.remove(((RealmsServerSelectionList.OnlineServerEntry)entry).getServerData());
-            this.servers.save();
-            this.serverSelectionList.setSelected((RealmsServerSelectionList.Entry)null);
-            this.serverSelectionList.updateOnlineServers(this.servers);
-        }
-
-        this.minecraft.setScreen(this);
-    }
-
-    private void editServerCallback(boolean bl) {
-        RealmsServerSelectionList.Entry entry = (RealmsServerSelectionList.Entry)this.serverSelectionList.getSelected();
-        if (bl && entry instanceof RealmsServerSelectionList.OnlineServerEntry) {
-            ServerData serverData = ((RealmsServerSelectionList.OnlineServerEntry)entry).getServerData();
-            serverData.name = this.editingServer.name;
-            serverData.ip = this.editingServer.ip;
-            serverData.copyFrom(this.editingServer);
-            this.servers.save();
-            this.serverSelectionList.updateOnlineServers(this.servers);
-        }
-
-        this.minecraft.setScreen(this);
-    }
-
-    private void addServerCallback(boolean bl) {
-        if (bl) {
-            ServerData serverData = this.servers.unhide(this.editingServer.ip);
-            if (serverData != null) {
-                serverData.copyNameIconFrom(this.editingServer);
-                this.servers.save();
-            } else {
-                this.servers.add(this.editingServer, false);
-                this.servers.save();
-            }
-
-            this.serverSelectionList.setSelected((RealmsServerSelectionList.Entry)null);
-            this.serverSelectionList.updateOnlineServers(this.servers);
-        }
-
-        this.minecraft.setScreen(this);
-    }
-
-    private void directJoinCallback(boolean bl) {
-        if (bl) {
-            ServerData serverData = this.servers.get(this.editingServer.ip);
-            if (serverData == null) {
-                this.servers.add(this.editingServer, true);
-                this.servers.save();
-                this.join(this.editingServer);
-            } else {
-                this.join(serverData);
-            }
-        } else {
-            this.minecraft.setScreen(this);
-        }
-
     }
 
     private void renderBackgroundInBlock(GuiGraphics guiGraphics, ResourceLocation resourceLocation) {
@@ -157,7 +131,20 @@ public class BotwServerScreen extends Screen {
 
     private void renderAnnouncementBackground(GuiGraphics guiGraphics) {
         ResourceLocation bg = new ResourceLocation(Realms.MODID, "textures/gui/elements.png");
-        guiGraphics.blit(bg, this.width / 2, 0, 0, 0, 0, 147, 166, 256, 256);
+        guiGraphics.blit(bg, this.width / 2 - 180, 50, 0, 0, 0, 147 / 2, 166, 256, 256);
+        guiGraphics.blit(bg, this.width / 2 - 147 / 2 - 100 / 2, 50, 0, 8, 0, 130, 166, 256, 256);
+        guiGraphics.blit(bg, this.width / 2 - 147 / 2 + 60, 50, 0, 8, 0, 130, 166, 256, 256);
+        guiGraphics.blit(bg, this.width / 2 + 147 / 2 + 35, 50, 0, 147 / 2, 0, 147 / 2, 166, 256, 256);
+    }
+
+    private void renderAnnouncement(GuiGraphics guiGraphics) {
+        renderAnnouncementBackground(guiGraphics);
+        // Total: 147x166, 14 lines
+        int y = 50 + 15;
+        for (String lines : announcementLines) {
+            guiGraphics.drawString(font, lines, this.width / 2 - 147 / 2 - 131 / 2 - 30, y, 0xFFFFFF);
+            y += 10;
+        }
     }
 
     public boolean keyPressed(int i, int j, int k) {
@@ -180,10 +167,12 @@ public class BotwServerScreen extends Screen {
 
     public void render(GuiGraphics guiGraphics, int i, int j, float f) {
         this.toolTip = null;
-        this.serverSelectionList.render(guiGraphics, i, j, f);
         this.renderBackgroundInBlock(guiGraphics, new ResourceLocation("textures/block/cut_copper.png"));
-        this.renderAnnouncementBackground(guiGraphics);
-        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 16777215);
+        this.renderAnnouncement(guiGraphics);
+        this.serverSelectionList.render(guiGraphics, i, j, f);
+        String copyright = "MIT SOFTWARE, BOTW MINECRAFT SERVER";
+        guiGraphics.drawCenteredString(this.font, copyright, this.width / 2, 225, 16777215);
+//        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 180, 16777215);
         super.render(guiGraphics, i, j, f);
         if (this.toolTip != null) {
             guiGraphics.renderComponentTooltip(this.font, this.toolTip, i, j);
@@ -196,7 +185,6 @@ public class BotwServerScreen extends Screen {
         if (entry instanceof RealmsServerSelectionList.OnlineServerEntry) {
             this.join(((RealmsServerSelectionList.OnlineServerEntry)entry).getServerData());
         }
-
     }
 
     private void join(ServerData serverData) {
