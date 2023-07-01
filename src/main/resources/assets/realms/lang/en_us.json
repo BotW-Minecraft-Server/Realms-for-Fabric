@@ -1,4 +1,5 @@
 {
   "gui.realms.singleplayerlocked": "Realms can not be used in singleplayer mode.",
+  "gui.realms.finding": "Looking for the realms with good networking...",
   "menu.botwmcs.realms": "BotWMCS Realms"
 }

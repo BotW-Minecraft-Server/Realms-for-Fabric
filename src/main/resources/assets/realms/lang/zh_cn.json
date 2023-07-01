@@ -1,4 +1,5 @@
 {
   "gui.realms.singleplayerlocked": "领域系统在单人游戏不可用",
-  "menu.botwmcs.realms": "BotWMCS Realms"
+  "menu.botwmcs.realms": "BotWMCS Realms",
+  "gui.realms.finding": "正在寻找网络环境最佳的领域..."
 }

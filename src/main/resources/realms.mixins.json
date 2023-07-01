@@ -8,6 +8,8 @@
     "function.PlayerMixin"
   ],
   "client": [
+    "function.JoinMultiplayerScreenMixin",
+    "function.ServerSelectionListLANHeaderMixin",
     "function.TitleScreenMixin"
   ],
   "injectors": {
