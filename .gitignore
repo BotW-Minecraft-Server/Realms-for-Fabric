@@ -27,16 +27,4 @@ replay_pid*
 /.gradle/
 /build/
 /.idea/
-.gradle/7.3.3/executionHistory/executionHistory.bin
-.gradle/7.3.3/executionHistory/executionHistory.lock
-.gradle/7.3.3/fileHashes/fileHashes.bin
-.gradle/7.3.3/fileHashes/fileHashes.lock
-.gradle/7.3.3/fileHashes/resourceHashesCache.bin
-.gradle/buildOutputCleanup/buildOutputCleanup.lock
-.gradle/file-system.probe
-build/classes/java/main/realms-refmap.json
-build/loom-cache/mixin-map-loom.mappings.1_20_1.layered+hash.2198-v2.main.tiny
-build/resources/main/assets/realms/lang/en_us.json
-build/resources/main/assets/realms/lang/zh_cn.json
-build/resources/main/realms.mixins.json
-build/tmp/compileJava/previous-compilation-data.bin
+
