@@ -4,5 +4,9 @@
   "gui.realms.finding": "正在寻找网络环境最佳的领域...",
   "menu.botwmcs.realms.tooltip": "与朋友一同游玩 BotWMCS (需要平台支持)",
   "menu.botwmcs.botwpage": "BotWMCS 官网",
-  "menu.botwmcs.botwpage.tooltip": "访问 BotWMCS 官网"
+  "menu.botwmcs.botwpage.tooltip": "访问 BotWMCS 官网",
+  "menu.botwmcs.singleplayer": "单人游戏",
+  "menu.botwmcs.singleplayer.inactive": "单人游戏不可用",
+  "menu.botwmcs.singleplayer.tooltip": "在本地游玩 BotWMCS",
+  "menu.botwmcs.singleplayer.inactive.tooltip": "单人游戏在此时不再可用，请查看官网以获取最新信息"
 }

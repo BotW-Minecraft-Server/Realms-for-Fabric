@@ -48,9 +48,12 @@ public abstract class TitleScreenMixin extends Screen {
         officialWebsiteButton.setTooltip(Tooltip.create(Component.translatable("menu.botwmcs.botwpage.tooltip")));
 
         // Singleplayer button (never used)
-        this.addRenderableWidget(Button.builder(Component.translatable("menu.singleplayer"), (button) -> {
+        final AbstractWidget singleplayerButton = addRenderableWidget(Button.builder(Component.translatable("menu.botwmcs.singleplayer.inactive"), (button) -> {
+            button.active = false;
             this.minecraft.setScreen(new SelectWorldScreen(this));
         }).bounds(this.width / 2 - 100, i + j * 1, 200, 20).build());
+        singleplayerButton.active = false;
+        singleplayerButton.setTooltip(Tooltip.create(Component.translatable("menu.botwmcs.singleplayer.inactive.tooltip")));
 
 
 

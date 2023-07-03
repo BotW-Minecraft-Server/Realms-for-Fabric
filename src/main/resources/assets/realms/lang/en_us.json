@@ -3,5 +3,9 @@
   "menu.botwmcs.realms": "BotWMCS Realms",
   "menu.botwmcs.realms.tooltip": "Play online with friends (platform dependent)",
   "menu.botwmcs.botwpage": "BotWMCS Website",
-  "menu.botwmcs.botwpage.tooltip": "Visit the BotWMCS website"
+  "menu.botwmcs.botwpage.tooltip": "Visit the BotWMCS website",
+  "menu.botwmcs.singleplayer": "Singleplayer",
+  "menu.botwmcs.singleplayer.inactive": "Singleplayer Unavailable",
+  "menu.botwmcs.singleplayer.tooltip": "Play on your own, create with bots or play with friends on your own network",
+  "menu.botwmcs.singleplayer.inactive.tooltip": "Singleplayer is unavailable"
 }
