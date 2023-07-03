@@ -7,5 +7,9 @@
   "menu.botwmcs.singleplayer": "Singleplayer",
   "menu.botwmcs.singleplayer.inactive": "Singleplayer Unavailable",
   "menu.botwmcs.singleplayer.tooltip": "Play on your own, create with bots or play with friends on your own network",
-  "menu.botwmcs.singleplayer.inactive.tooltip": "Singleplayer is unavailable"
+  "menu.botwmcs.singleplayer.inactive.tooltip": "Singleplayer is unavailable",
+  "menu.botwmcs.social": "Social",
+  "menu.botwmcs.social.tooltip": "Chat with friends, see what they're playing and more",
+  "menu.botwmcs.personal": "Personal",
+  "menu.botwmcs.personal.tooltip": "Change your skin, your multiplayer settings and more"
 }

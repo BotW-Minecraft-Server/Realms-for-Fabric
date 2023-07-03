@@ -8,5 +8,9 @@
   "menu.botwmcs.singleplayer": "单人游戏",
   "menu.botwmcs.singleplayer.inactive": "单人游戏不可用",
   "menu.botwmcs.singleplayer.tooltip": "在本地游玩 BotWMCS",
-  "menu.botwmcs.singleplayer.inactive.tooltip": "单人游戏在此时不再可用，请查看官网以获取最新信息"
+  "menu.botwmcs.singleplayer.inactive.tooltip": "单人游戏在此时不再可用，请查看官网以获取最新信息",
+  "menu.botwmcs.social": "社区",
+  "menu.botwmcs.social.tooltip": "与朋友聊天, 并查看他们正在干什么",
+  "menu.botwmcs.personal": "个人主页",
+  "menu.botwmcs.personal.tooltip": "在此处设置你的皮肤和多人游戏选项"
 }
