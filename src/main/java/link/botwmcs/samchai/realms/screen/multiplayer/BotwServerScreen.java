@@ -4,6 +4,8 @@ import com.mojang.logging.LogUtils;
 import link.botwmcs.samchai.realms.Realms;
 import link.botwmcs.samchai.realms.config.RealmsCommonConfig;
 import me.shedaniel.autoconfig.AutoConfig;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.SharedConstants;
 import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
@@ -31,6 +33,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+@Environment(EnvType.CLIENT)
 public class BotwServerScreen extends Screen {
     public static final int BUTTON_ROW_WIDTH = 308;
     public static final int TOP_ROW_BUTTON_WIDTH = 100;
@@ -167,7 +170,7 @@ public class BotwServerScreen extends Screen {
 
     public void render(GuiGraphics guiGraphics, int i, int j, float f) {
         this.toolTip = null;
-        this.renderBackgroundInBlock(guiGraphics, new ResourceLocation("textures/block/cut_copper.png"));
+        this.renderBackgroundInBlock(guiGraphics, new ResourceLocation("textures/block/deepslate_bricks.png"));
         this.renderAnnouncement(guiGraphics);
         this.serverSelectionList.render(guiGraphics, i, j, f);
         String copyright = "MIT SOFTWARE, BOTW MINECRAFT SERVER";

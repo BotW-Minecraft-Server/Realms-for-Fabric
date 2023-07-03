@@ -2,11 +2,14 @@ package link.botwmcs.samchai.realms.screen;
 
 import link.botwmcs.samchai.realms.config.RealmsCommonConfig;
 import me.shedaniel.autoconfig.AutoConfig;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
+@Environment(EnvType.CLIENT)
 public class SinglePlayerLockScreen implements HudRenderCallback {
     @Override
     public void onHudRender(GuiGraphics drawContext, float tickDelta) {

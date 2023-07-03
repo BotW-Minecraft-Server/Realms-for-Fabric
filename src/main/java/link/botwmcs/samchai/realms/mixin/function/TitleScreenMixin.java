@@ -1,21 +1,26 @@
 package link.botwmcs.samchai.realms.mixin.function;
 
+import link.botwmcs.samchai.realms.Realms;
+import link.botwmcs.samchai.realms.screen.element.ImageTextButton;
 import link.botwmcs.samchai.realms.screen.multiplayer.BotwServerScreen;
 import net.minecraft.Util;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.screens.ConfirmLinkScreen;
+import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
+
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
+
     protected TitleScreenMixin(Component component) {
         super(component);
     }
+
 
     /**
      * @author Sam_Chai
@@ -23,22 +28,30 @@ public abstract class TitleScreenMixin extends Screen {
      */
     @Overwrite
     private void createNormalMenuOptions(int i, int j) {
-        this.addRenderableWidget(Button.builder(Component.translatable("menu.botwmcs.realms"), (button) -> {
+        ResourceLocation buttons = new ResourceLocation(Realms.MODID, "textures/gui/buttons.png");
+
+        // BotWMCS Realms button
+        final AbstractWidget botwRealmsButton = addRenderableWidget(ImageTextButton.builder(Component.translatable("menu.botwmcs.realms"), buttons, button -> {
             this.minecraft.setScreen(new BotwServerScreen(this));
-        }).bounds(this.width / 2 - 100, i, 200, 20).build()).setTooltip(Tooltip.create(Component.translatable("menu.botwmcs.realms.tooltip")));
+        }).texStart(0, 20).offset(0, 0).yDiffTex(20).usedTextureSize(98, 20).textureSize(256, 256).build());
+        botwRealmsButton.setPosition(this.width / 2 - 100, i);
+        botwRealmsButton.setWidth(98);
+        botwRealmsButton.setTooltip(Tooltip.create(Component.translatable("menu.botwmcs.realms.tooltip")));
 
-        this.addRenderableWidget(Button.builder(Component.translatable("menu.botwmcs.botwpage"), (button) -> {
-            this.minecraft.setScreen(new ConfirmLinkScreen((bl) -> {
-                if (bl) {
-                    Util.getPlatform().openUri("https://www.minecraft.net/realms");
-                }
-                this.minecraft.setScreen(this);
-            }, "https://www.minecraft.net/realms/worlds", true));
-        }).bounds(this.width / 2 - 100, i + j * 1, 200, 20).build()).setTooltip(Tooltip.create(Component.translatable("menu.botwmcs.botwpage.tooltip")));;
+        // Official website button
+        String url = "https://botwmcs.link";
+        final AbstractWidget officialWebsiteButton = addRenderableWidget(ImageTextButton.builder(Component.translatable("menu.botwmcs.botwpage"), buttons, button -> {
+            Util.getPlatform().openUri(url);
+        }).texStart(0, 20).offset(0, 0).yDiffTex(20).usedTextureSize(98, 20).textureSize(256, 256).build());
+        officialWebsiteButton.setPosition(this.width / 2 + 2, i);
+        officialWebsiteButton.setWidth(98);
+        officialWebsiteButton.setTooltip(Tooltip.create(Component.translatable("menu.botwmcs.botwpage.tooltip")));
 
-//        this.addRenderableWidget(Button.builder(Component.translatable("menu.botwmcs.realms"), (button) -> {
-//            this.minecraft.setScreen(new RealmsServerScreen(this));
-//        }).bounds(this.width / 2 - 100, i + j * 1, 200, 20).build());
+        // Singleplayer button (never used)
+        this.addRenderableWidget(Button.builder(Component.translatable("menu.singleplayer"), (button) -> {
+            this.minecraft.setScreen(new SelectWorldScreen(this));
+        }).bounds(this.width / 2 - 100, i + j * 1, 200, 20).build());
+
 
 
     }
